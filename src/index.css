@@ -194,12 +194,27 @@
   /* Photo polaroid effect */
   .polaroid {
     background: hsl(0 0% 98%);
-    padding: 8px 8px 32px 8px;
+    padding: 4px 4px 16px 4px;
     box-shadow: 
-      0 4px 6px -1px hsl(0 0% 0% / 0.1),
-      0 2px 4px -2px hsl(0 0% 0% / 0.1);
+      0 2px 4px -1px hsl(0 0% 0% / 0.1),
+      0 1px 2px -1px hsl(0 0% 0% / 0.1);
     transform: rotate(-2deg);
     transition: transform 0.3s ease;
+  }
+  
+  @media (min-width: 640px) {
+    .polaroid {
+      padding: 6px 6px 24px 6px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .polaroid {
+      padding: 8px 8px 32px 8px;
+      box-shadow: 
+        0 4px 6px -1px hsl(0 0% 0% / 0.1),
+        0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    }
   }
 
   .polaroid:hover {

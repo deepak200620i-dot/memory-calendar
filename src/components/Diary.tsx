@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import { diaryContent } from '@/data/diaryContent';
 import { DiaryPage } from './DiaryPage';
@@ -13,6 +13,11 @@ export const Diary = () => {
   const [flipDirection, setFlipDirection] = useState<'next' | 'prev' | null>(null);
   const [flipProgress, setFlipProgress] = useState(0);
   const { playFlipSound } = usePageFlipSound();
+  
+  // Swipe handling
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const openDiary = useCallback(() => {
     playFlipSound();
@@ -58,12 +63,37 @@ export const Diary = () => {
     }, 600);
   }, [currentPage, isFlipping, closeDiary, playFlipSound]);
 
-  const nextPage = () => goToPage(currentPage + 1);
-  const prevPage = () => {
+  const nextPage = useCallback(() => goToPage(currentPage + 1), [currentPage, goToPage]);
+  const prevPage = useCallback(() => {
     if (currentPage === 0) {
       closeDiary();
     } else {
       goToPage(currentPage - 1);
+    }
+  }, [currentPage, goToPage, closeDiary]);
+
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isOpen || isFlipping) return;
+    
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+    
+    if (swipeDistance > minSwipeDistance) {
+      // Swiped left - next page
+      nextPage();
+    } else if (swipeDistance < -minSwipeDistance) {
+      // Swiped right - previous page
+      prevPage();
     }
   };
 
@@ -75,38 +105,38 @@ export const Diary = () => {
     <>
       <OrientationPrompt />
       
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-8">
+      <div className="flex flex-col items-center justify-center min-h-screen p-2 sm:p-4 md:p-8 landscape:p-2">
         {/* Title - only show when diary is closed */}
-        <div className={`text-center mb-6 sm:mb-8 transition-opacity duration-500 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <div className={`text-center mb-4 sm:mb-6 md:mb-8 transition-opacity duration-500 ${isOpen ? 'opacity-0 pointer-events-none absolute' : 'opacity-100'}`}>
           <p className="font-serif text-foreground/60 text-sm sm:text-base flex items-center justify-center gap-2">
             A journey through 12 months of love <Heart className="w-4 h-4 text-accent fill-accent" />
           </p>
         </div>
         
         {/* Diary Container */}
-        <div className="relative perspective-2000">
+        <div className="relative perspective-2000 w-full h-full flex items-center justify-center landscape:flex-1">
           {/* Diary Book */}
           <div 
-            className="diary-cover rounded-lg sm:rounded-xl overflow-hidden relative"
-            style={{
-              width: 'min(90vw, 900px)',
-              height: 'min(70vh, 600px)',
-            }}
+            ref={containerRef}
+            className="diary-cover rounded-lg sm:rounded-xl overflow-hidden relative landscape:w-[95vw] landscape:h-[85vh] portrait:w-[90vw] portrait:h-[60vh] sm:w-[min(90vw,900px)] sm:h-[min(70vh,600px)]"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {/* Cover */}
             <DiaryCover isOpen={isOpen} onOpen={openDiary} />
             
             {/* Spine */}
-            <div className="diary-spine absolute left-0 top-0 bottom-0 w-4 sm:w-6 z-30"></div>
+            <div className="diary-spine absolute left-0 top-0 bottom-0 w-3 sm:w-4 md:w-6 z-30"></div>
             
             {/* Gold corner accents */}
-            <div className="absolute top-2 left-8 w-8 h-8 border-t-2 border-l-2 border-diary-gold/50 rounded-tl-sm z-30"></div>
-            <div className="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-diary-gold/50 rounded-tr-sm z-30"></div>
-            <div className="absolute bottom-2 left-8 w-8 h-8 border-b-2 border-l-2 border-diary-gold/50 rounded-bl-sm z-30"></div>
-            <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-diary-gold/50 rounded-br-sm z-30"></div>
+            <div className="absolute top-2 left-6 sm:left-8 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-l-2 border-diary-gold/50 rounded-tl-sm z-30"></div>
+            <div className="absolute top-2 right-2 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-r-2 border-diary-gold/50 rounded-tr-sm z-30"></div>
+            <div className="absolute bottom-2 left-6 sm:left-8 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-l-2 border-diary-gold/50 rounded-bl-sm z-30"></div>
+            <div className="absolute bottom-2 right-2 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-r-2 border-diary-gold/50 rounded-br-sm z-30"></div>
             
             {/* Pages Container */}
-            <div className={`absolute inset-2 sm:inset-3 left-6 sm:left-8 overflow-hidden rounded-lg transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+            <div className={`absolute inset-1.5 sm:inset-2 md:inset-3 left-4 sm:left-6 md:left-8 overflow-hidden rounded-lg transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
               {/* Previous page (visible during backward flip) */}
               {prevMonth && isFlipping && flipDirection === 'prev' && (
                 <div className="absolute inset-0 z-10">
@@ -123,7 +153,7 @@ export const Diary = () => {
               
               {/* Current Page with realistic flip animation */}
               <div 
-                className={`absolute inset-0 z-20 preserve-3d ${isFlipping ? '' : ''}`}
+                className={`absolute inset-0 z-20 preserve-3d`}
                 style={{
                   transformOrigin: flipDirection === 'next' ? 'left center' : 'right center',
                   transform: isFlipping 
@@ -168,36 +198,45 @@ export const Diary = () => {
               )}
             </div>
             
-            {/* Navigation Arrows - only show when open */}
+            {/* Navigation Arrows - only show when open, hide on mobile */}
             {isOpen && (
               <>
                 <button
                   onClick={prevPage}
                   disabled={isFlipping}
-                  className="absolute left-8 sm:left-10 top-1/2 -translate-y-1/2 z-40 p-2 sm:p-3 rounded-full bg-diary-paper/90 text-diary-ink shadow-lg hover:bg-diary-paper hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute left-5 sm:left-8 md:left-10 top-1/2 -translate-y-1/2 z-40 p-1.5 sm:p-2 md:p-3 rounded-full bg-diary-paper/90 text-diary-ink shadow-lg hover:bg-diary-paper hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hidden sm:flex"
                   aria-label="Previous month"
                   title={currentPage === 0 ? "Close diary" : "Previous month"}
                 >
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
                 
                 <button
                   onClick={nextPage}
                   disabled={isFlipping}
-                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 p-2 sm:p-3 rounded-full bg-diary-paper/90 text-diary-ink shadow-lg hover:bg-diary-paper hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute right-2 sm:right-3 md:right-4 top-1/2 -translate-y-1/2 z-40 p-1.5 sm:p-2 md:p-3 rounded-full bg-diary-paper/90 text-diary-ink shadow-lg hover:bg-diary-paper hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hidden sm:flex"
                   aria-label={currentPage === diaryContent.length - 1 ? "Close diary" : "Next month"}
                   title={currentPage === diaryContent.length - 1 ? "Close diary" : "Next month"}
                 >
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
               </>
+            )}
+            
+            {/* Swipe indicator for mobile */}
+            {isOpen && (
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 text-diary-paper/70 text-xs sm:hidden">
+                <ChevronLeft className="w-3 h-3" />
+                <span className="font-serif">Swipe to flip</span>
+                <ChevronRight className="w-3 h-3" />
+              </div>
             )}
           </div>
         </div>
         
         {/* Navigation Dots - only show when open */}
         {isOpen && (
-          <div className="flex items-center gap-2 mt-6 sm:mt-8 animate-fade-in">
+          <div className="flex items-center gap-1.5 sm:gap-2 mt-3 sm:mt-6 md:mt-8 animate-fade-in">
             {diaryContent.map((month, index) => (
               <button
                 key={month.month}
@@ -212,7 +251,7 @@ export const Diary = () => {
         
         {/* Current Month Label - only show when open */}
         {isOpen && (
-          <p className="font-script text-xl sm:text-2xl gold-text mt-4 animate-fade-in">
+          <p className="font-script text-lg sm:text-xl md:text-2xl gold-text mt-2 sm:mt-4 animate-fade-in">
             {currentMonth.month}
           </p>
         )}
