@@ -2,95 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 25 30% 12%;
+    --foreground: 35 40% 90%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 30 25% 18%;
+    --card-foreground: 35 40% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 30 25% 18%;
+    --popover-foreground: 35 40% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 35 65% 55%;
+    --primary-foreground: 25 30% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 20% 25%;
+    --secondary-foreground: 35 40% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 15% 22%;
+    --muted-foreground: 35 20% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 15 70% 50%;
+    --accent-foreground: 35 40% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 20% 30%;
+    --input: 30 20% 30%;
+    --ring: 35 65% 55%;
 
     --radius: 0.5rem;
 
+    /* Diary specific tokens */
+    --diary-leather: 25 45% 20%;
+    --diary-paper: 40 35% 92%;
+    --diary-paper-aged: 35 30% 85%;
+    --diary-ink: 220 15% 20%;
+    --diary-gold: 45 80% 50%;
+    --diary-spine: 20 50% 15%;
+
+    /* Seasonal colors */
+    --winter-primary: 200 60% 70%;
+    --winter-secondary: 210 50% 85%;
+    --winter-accent: 195 80% 90%;
+    
+    --spring-primary: 140 50% 55%;
+    --spring-secondary: 100 40% 75%;
+    --spring-accent: 330 60% 75%;
+    
+    --summer-primary: 45 85% 60%;
+    --summer-secondary: 35 70% 75%;
+    --summer-accent: 195 70% 60%;
+    
+    --fall-primary: 25 70% 50%;
+    --fall-secondary: 35 60% 60%;
+    --fall-accent: 15 65% 45%;
+
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
+    --background: 25 30% 8%;
+    --foreground: 35 40% 90%;
+    --card: 30 25% 12%;
+    --card-foreground: 35 40% 90%;
+    --popover: 30 25% 12%;
+    --popover-foreground: 35 40% 90%;
+    --primary: 35 65% 55%;
+    --primary-foreground: 25 30% 10%;
+    --secondary: 30 20% 20%;
+    --secondary-foreground: 35 40% 90%;
+    --muted: 30 15% 18%;
+    --muted-foreground: 35 20% 55%;
+    --accent: 15 70% 50%;
+    --accent-foreground: 35 40% 95%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 30 20% 25%;
+    --input: 30 20% 25%;
+    --ring: 35 65% 55%;
   }
 }
 
@@ -100,6 +100,181 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+@layer components {
+  .font-script {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Diary leather texture */
+  .diary-cover {
+    background: 
+      radial-gradient(ellipse at 30% 20%, hsl(var(--diary-leather) / 0.9) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, hsl(25 35% 25% / 0.8) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(var(--diary-leather)) 0%, hsl(20 40% 18%) 50%, hsl(var(--diary-leather)) 100%);
+    box-shadow: 
+      inset 0 0 100px hsl(0 0% 0% / 0.3),
+      0 25px 50px -12px hsl(0 0% 0% / 0.5),
+      0 0 0 2px hsl(var(--diary-gold) / 0.3);
+  }
+
+  .diary-spine {
+    background: linear-gradient(90deg, 
+      hsl(var(--diary-spine)) 0%, 
+      hsl(25 40% 22%) 30%,
+      hsl(var(--diary-spine)) 100%
+    );
+    box-shadow: inset 2px 0 8px hsl(0 0% 0% / 0.4);
+  }
+
+  /* Paper textures */
+  .paper-left {
+    background: 
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"),
+      linear-gradient(90deg, hsl(35 25% 80%) 0%, hsl(var(--diary-paper-aged)) 10%, hsl(var(--diary-paper)) 100%);
+  }
+
+  .paper-right {
+    background: 
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"),
+      linear-gradient(90deg, hsl(var(--diary-paper)) 0%, hsl(var(--diary-paper-aged)) 90%, hsl(35 25% 80%) 100%);
+  }
+
+  /* Seasonal overlays */
+  .season-winter {
+    --page-tint: hsl(var(--winter-primary) / 0.1);
+    --page-accent: hsl(var(--winter-secondary));
+  }
+
+  .season-spring {
+    --page-tint: hsl(var(--spring-primary) / 0.1);
+    --page-accent: hsl(var(--spring-secondary));
+  }
+
+  .season-summer {
+    --page-tint: hsl(var(--summer-primary) / 0.1);
+    --page-accent: hsl(var(--summer-secondary));
+  }
+
+  .season-fall {
+    --page-tint: hsl(var(--fall-primary) / 0.1);
+    --page-accent: hsl(var(--fall-secondary));
+  }
+
+  /* Page flip animation */
+  .page-flip {
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
+  }
+
+  .page-flip.flipped {
+    transform: rotateY(-180deg);
+  }
+
+  .page-front,
+  .page-back {
+    backface-visibility: hidden;
+    position: absolute;
+    inset: 0;
+  }
+
+  .page-back {
+    transform: rotateY(180deg);
+  }
+
+  /* Photo polaroid effect */
+  .polaroid {
+    background: hsl(0 0% 98%);
+    padding: 8px 8px 32px 8px;
+    box-shadow: 
+      0 4px 6px -1px hsl(0 0% 0% / 0.1),
+      0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+  }
+
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.02);
+  }
+
+  /* Decorative elements */
+  .snowflake {
+    animation: fall 10s linear infinite;
+    opacity: 0.7;
+  }
+
+  .leaf {
+    animation: sway 4s ease-in-out infinite;
+  }
+
+  .flower {
+    animation: bloom 3s ease-in-out infinite;
+  }
+
+  .sunray {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-5deg) translateX(0); }
+    50% { transform: rotate(5deg) translateX(5px); }
+  }
+
+  @keyframes bloom {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Navigation dots */
+  .nav-dot {
+    @apply w-2 h-2 rounded-full transition-all duration-300;
+    background: hsl(var(--diary-gold) / 0.4);
+  }
+
+  .nav-dot.active {
+    @apply w-3 h-3;
+    background: hsl(var(--diary-gold));
+    box-shadow: 0 0 10px hsl(var(--diary-gold) / 0.5);
+  }
+
+  /* Gold accents */
+  .gold-text {
+    color: hsl(var(--diary-gold));
+    text-shadow: 0 1px 2px hsl(0 0% 0% / 0.2);
+  }
+
+  .gold-border {
+    border-color: hsl(var(--diary-gold) / 0.5);
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
   }
 }
