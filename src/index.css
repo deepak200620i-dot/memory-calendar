@@ -261,6 +261,25 @@
     50% { opacity: 0.8; }
   }
 
+  /* Tutorial animations */
+  @keyframes bounce-left {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-8px); }
+  }
+
+  @keyframes bounce-right {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  .animate-bounce-left {
+    animation: bounce-left 1s ease-in-out infinite;
+  }
+
+  .animate-bounce-right {
+    animation: bounce-right 1s ease-in-out infinite;
+  }
+
   /* Navigation dots */
   .nav-dot {
     @apply w-2 h-2 rounded-full transition-all duration-300;

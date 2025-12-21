@@ -3,8 +3,14 @@ import { ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import { diaryContent } from '@/data/diaryContent';
 import { DiaryPage } from './DiaryPage';
 import { DiaryCover } from './DiaryCover';
+import { DiaryBackCover } from './DiaryBackCover';
 import { OrientationPrompt } from './OrientationPrompt';
+import { OnboardingTutorial } from './OnboardingTutorial';
+import { NewYearWishPage } from './NewYearWishPage';
 import { usePageFlipSound } from '@/hooks/usePageFlipSound';
+
+// Total pages = 12 months + 1 New Year wish page
+const TOTAL_PAGES = diaryContent.length + 1;
 
 export const Diary = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +18,8 @@ export const Diary = () => {
   const [isFlipping, setIsFlipping] = useState(false);
   const [flipDirection, setFlipDirection] = useState<'next' | 'prev' | null>(null);
   const [flipProgress, setFlipProgress] = useState(0);
+  const [showBackCover, setShowBackCover] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(true);
   const { playFlipSound } = usePageFlipSound();
   
   // Swipe handling
@@ -22,21 +30,24 @@ export const Diary = () => {
   const openDiary = useCallback(() => {
     playFlipSound();
     setIsOpen(true);
+    setShowBackCover(false);
   }, [playFlipSound]);
 
   const closeDiary = useCallback(() => {
     playFlipSound();
     setIsOpen(false);
     setCurrentPage(0);
+    setShowBackCover(false);
   }, [playFlipSound]);
 
   const goToPage = useCallback((pageIndex: number) => {
     if (isFlipping || pageIndex === currentPage) return;
     if (pageIndex < 0) return;
     
-    // If trying to go past the last page, close the diary
-    if (pageIndex >= diaryContent.length) {
-      closeDiary();
+    // If trying to go past the last page (New Year wish), show back cover
+    if (pageIndex >= TOTAL_PAGES) {
+      playFlipSound();
+      setShowBackCover(true);
       return;
     }
     
@@ -61,16 +72,21 @@ export const Diary = () => {
       setFlipDirection(null);
       setFlipProgress(0);
     }, 600);
-  }, [currentPage, isFlipping, closeDiary, playFlipSound]);
+  }, [currentPage, isFlipping, playFlipSound]);
 
   const nextPage = useCallback(() => goToPage(currentPage + 1), [currentPage, goToPage]);
   const prevPage = useCallback(() => {
+    if (showBackCover) {
+      playFlipSound();
+      setShowBackCover(false);
+      return;
+    }
     if (currentPage === 0) {
       closeDiary();
     } else {
       goToPage(currentPage - 1);
     }
-  }, [currentPage, goToPage, closeDiary]);
+  }, [currentPage, goToPage, closeDiary, showBackCover, playFlipSound]);
 
   // Touch handlers for swipe
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -83,7 +99,18 @@ export const Diary = () => {
   };
 
   const handleTouchEnd = () => {
-    if (!isOpen || isFlipping) return;
+    if (isFlipping) return;
+    
+    // Handle swipe on back cover
+    if (showBackCover) {
+      const swipeDistance = touchStartX.current - touchEndX.current;
+      if (swipeDistance < -50) {
+        prevPage();
+      }
+      return;
+    }
+    
+    if (!isOpen) return;
     
     const swipeDistance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
@@ -97,17 +124,20 @@ export const Diary = () => {
     }
   };
 
-  const currentMonth = diaryContent[currentPage];
+  // Check if we're on the New Year wish page
+  const isNewYearPage = currentPage === diaryContent.length;
+  const currentMonth = isNewYearPage ? null : diaryContent[currentPage];
   const nextMonth = currentPage < diaryContent.length - 1 ? diaryContent[currentPage + 1] : null;
   const prevMonth = currentPage > 0 ? diaryContent[currentPage - 1] : null;
 
   return (
     <>
       <OrientationPrompt />
+      {showTutorial && <OnboardingTutorial onComplete={() => setShowTutorial(false)} />}
       
       <div className="flex flex-col items-center justify-center min-h-screen p-2 sm:p-4 md:p-8 landscape:p-2">
         {/* Title - only show when diary is closed */}
-        <div className={`text-center mb-4 sm:mb-6 md:mb-8 transition-opacity duration-500 ${isOpen ? 'opacity-0 pointer-events-none absolute' : 'opacity-100'}`}>
+        <div className={`text-center mb-4 sm:mb-6 md:mb-8 transition-opacity duration-500 ${isOpen || showBackCover ? 'opacity-0 pointer-events-none absolute' : 'opacity-100'}`}>
           <p className="font-serif text-foreground/60 text-sm sm:text-base flex items-center justify-center gap-2">
             A journey through 12 months of love <Heart className="w-4 h-4 text-accent fill-accent" />
           </p>
@@ -115,10 +145,13 @@ export const Diary = () => {
         
         {/* Diary Container */}
         <div className="relative perspective-2000 w-full h-full flex items-center justify-center landscape:flex-1">
+          {/* Back Cover */}
+          <DiaryBackCover isVisible={showBackCover} />
+          
           {/* Diary Book */}
           <div 
             ref={containerRef}
-            className="diary-cover rounded-lg sm:rounded-xl overflow-hidden relative landscape:w-[95vw] landscape:h-[85vh] portrait:w-[90vw] portrait:h-[60vh] sm:w-[min(90vw,900px)] sm:h-[min(70vh,600px)]"
+            className={`diary-cover rounded-lg sm:rounded-xl overflow-hidden relative landscape:w-[95vw] landscape:h-[85vh] portrait:w-[90vw] portrait:h-[60vh] sm:w-[min(90vw,900px)] sm:h-[min(70vh,600px)] ${showBackCover ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -144,8 +177,13 @@ export const Diary = () => {
                 </div>
               )}
               
-              {/* Next page (visible under current during forward flip) */}
-              {nextMonth && isFlipping && flipDirection === 'next' && (
+              {/* Next page (visible under current during forward flip) - could be New Year page */}
+              {isFlipping && flipDirection === 'next' && currentPage === diaryContent.length - 1 && (
+                <div className="absolute inset-0 z-10">
+                  <NewYearWishPage isActive={false} />
+                </div>
+              )}
+              {nextMonth && isFlipping && flipDirection === 'next' && currentPage < diaryContent.length - 1 && (
                 <div className="absolute inset-0 z-10">
                   <DiaryPage data={nextMonth} isActive={false} />
                 </div>
@@ -169,7 +207,11 @@ export const Diary = () => {
                   className="absolute inset-0 backface-hidden"
                   style={{ backfaceVisibility: 'hidden' }}
                 >
-                  <DiaryPage data={currentMonth} isActive={!isFlipping} />
+                  {isNewYearPage ? (
+                    <NewYearWishPage isActive={!isFlipping} />
+                  ) : (
+                    <DiaryPage data={currentMonth!} isActive={!isFlipping} />
+                  )}
                 </div>
                 
                 {/* Back of page (shows during flip) */}
@@ -199,7 +241,7 @@ export const Diary = () => {
             </div>
             
             {/* Navigation Arrows - only show when open, hide on mobile */}
-            {isOpen && (
+            {isOpen && !showBackCover && (
               <>
                 <button
                   onClick={prevPage}
@@ -215,8 +257,8 @@ export const Diary = () => {
                   onClick={nextPage}
                   disabled={isFlipping}
                   className="absolute right-2 sm:right-3 md:right-4 top-1/2 -translate-y-1/2 z-40 p-1.5 sm:p-2 md:p-3 rounded-full bg-diary-paper/90 text-diary-ink shadow-lg hover:bg-diary-paper hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hidden sm:flex"
-                  aria-label={currentPage === diaryContent.length - 1 ? "Close diary" : "Next month"}
-                  title={currentPage === diaryContent.length - 1 ? "Close diary" : "Next month"}
+                  aria-label={isNewYearPage ? "View back cover" : "Next month"}
+                  title={isNewYearPage ? "View back cover" : "Next month"}
                 >
                   <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
@@ -224,7 +266,7 @@ export const Diary = () => {
             )}
             
             {/* Swipe indicator for mobile */}
-            {isOpen && (
+            {isOpen && !showBackCover && (
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 text-diary-paper/70 text-xs sm:hidden">
                 <ChevronLeft className="w-3 h-3" />
                 <span className="font-serif">Swipe to flip</span>
@@ -234,8 +276,8 @@ export const Diary = () => {
           </div>
         </div>
         
-        {/* Navigation Dots - only show when open */}
-        {isOpen && (
+        {/* Navigation Dots - only show when open and not on back cover */}
+        {isOpen && !showBackCover && (
           <div className="flex items-center gap-1.5 sm:gap-2 mt-3 sm:mt-6 md:mt-8 animate-fade-in">
             {diaryContent.map((month, index) => (
               <button
@@ -246,13 +288,20 @@ export const Diary = () => {
                 title={month.month}
               />
             ))}
+            {/* New Year wish page dot */}
+            <button
+              onClick={() => goToPage(diaryContent.length)}
+              className={`nav-dot ${isNewYearPage ? 'active' : ''}`}
+              aria-label="New Year Wishes"
+              title="New Year Wishes"
+            />
           </div>
         )}
         
-        {/* Current Month Label - only show when open */}
-        {isOpen && (
+        {/* Current Month Label - only show when open and not on back cover */}
+        {isOpen && !showBackCover && (
           <p className="font-script text-lg sm:text-xl md:text-2xl gold-text mt-2 sm:mt-4 animate-fade-in">
-            {currentMonth.month}
+            {isNewYearPage ? "New Year Wishes" : currentMonth?.month}
           </p>
         )}
       </div>
