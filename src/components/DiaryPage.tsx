@@ -36,7 +36,7 @@ export const DiaryPage = ({ data, isActive }: DiaryPageProps) => {
   return (
     <div className={`flex w-full h-full ${getSeasonClass(data.season)}`}>
       {/* Left Page - Memories & Photos */}
-      <div className="w-1/2 paper-left relative p-2 sm:p-4 md:p-6 lg:p-8 flex flex-col border-r border-diary-ink/10 overflow-hidden">
+      <div className="w-1/2 paper-left relative p-2 sm:p-4 md:p-6 lg:p-8 flex flex-col border-r border-diary-ink/10 overflow-y-auto overflow-x-hidden">
         <SeasonalDecorations season={data.season} />
         
         <div className="relative z-20 flex-shrink-0">
@@ -63,7 +63,7 @@ export const DiaryPage = ({ data, isActive }: DiaryPageProps) => {
         </div>
         
         {/* Photo Grid */}
-        <div className="flex-1 flex flex-wrap gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 items-center justify-center relative z-20 mt-1 sm:mt-2 min-h-0 overflow-hidden">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 items-center justify-center relative z-20 mt-1 sm:mt-2 pb-4 sm:pb-2">
           {Array.from({ length: data.photoPlaceholders }).map((_, i) => (
             <PhotoMemory 
               key={i} 
@@ -75,7 +75,7 @@ export const DiaryPage = ({ data, isActive }: DiaryPageProps) => {
         </div>
         
         {/* Page number */}
-        <div className="absolute bottom-1 sm:bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 text-diary-ink/40 text-[8px] sm:text-[10px] md:text-xs font-serif">
+        <div className="text-center text-diary-ink/40 text-[8px] sm:text-[10px] md:text-xs font-serif mt-auto pt-1 sm:pt-2">
           {data.month.substring(0, 3).toUpperCase()}
         </div>
       </div>

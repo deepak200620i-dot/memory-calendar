@@ -40,11 +40,11 @@ export const PhotoMemory = ({ index, season, rotation = 0 }: PhotoMemoryProps) =
       onMouseLeave={() => setIsHovered(false)}
     >
       <div 
-        className={`aspect-square w-12 sm:w-16 md:w-20 lg:w-24 bg-gradient-to-br ${seasonGradients[season]} flex items-center justify-center rounded-sm`}
+        className={`aspect-square w-16 sm:w-16 md:w-20 lg:w-24 bg-gradient-to-br ${seasonGradients[season]} flex items-center justify-center rounded-sm`}
       >
-        <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">{icon}</span>
+        <span className="text-xl sm:text-xl md:text-2xl lg:text-3xl">{icon}</span>
       </div>
-      <p className="text-center text-[8px] sm:text-[10px] md:text-xs text-diary-ink/70 mt-1 sm:mt-2 font-script">
+      <p className="text-center text-[8px] sm:text-[10px] md:text-xs text-diary-ink/70 mt-1 font-script">
         Memory #{index + 1}
       </p>
     </div>
