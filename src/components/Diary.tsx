@@ -4,13 +4,14 @@ import { diaryContent } from '@/data/diaryContent';
 import { DiaryPage } from './DiaryPage';
 import { DiaryCover } from './DiaryCover';
 import { DiaryBackCover } from './DiaryBackCover';
+import { DiaryOverviewPage } from './DiaryOverviewPage';
 import { OrientationPrompt } from './OrientationPrompt';
 import { OnboardingTutorial } from './OnboardingTutorial';
 import { NewYearWishPage } from './NewYearWishPage';
 import { usePageFlipSound } from '@/hooks/usePageFlipSound';
 
-// Total pages = 12 months + 1 New Year wish page
-const TOTAL_PAGES = diaryContent.length + 1;
+// Total pages = 1 overview + 12 months + 1 New Year wish page
+const TOTAL_PAGES = 1 + diaryContent.length + 1;
 
 export const Diary = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -124,11 +125,13 @@ export const Diary = () => {
     }
   };
 
-  // Check if we're on the New Year wish page
-  const isNewYearPage = currentPage === diaryContent.length;
-  const currentMonth = isNewYearPage ? null : diaryContent[currentPage];
-  const nextMonth = currentPage < diaryContent.length - 1 ? diaryContent[currentPage + 1] : null;
-  const prevMonth = currentPage > 0 ? diaryContent[currentPage - 1] : null;
+  // Page 0 = Overview, Pages 1-12 = Months, Page 13 = New Year wish
+  const isOverviewPage = currentPage === 0;
+  const isNewYearPage = currentPage === diaryContent.length + 1;
+  const monthIndex = currentPage - 1; // Adjust for overview page
+  const currentMonth = (monthIndex >= 0 && monthIndex < diaryContent.length) ? diaryContent[monthIndex] : null;
+  const nextMonth = (monthIndex + 1 >= 0 && monthIndex + 1 < diaryContent.length) ? diaryContent[monthIndex + 1] : null;
+  const prevMonth = (monthIndex - 1 >= 0 && monthIndex - 1 < diaryContent.length) ? diaryContent[monthIndex - 1] : null;
 
   return (
     <>
@@ -171,19 +174,29 @@ export const Diary = () => {
             {/* Pages Container */}
             <div className={`absolute inset-1.5 sm:inset-2 md:inset-3 left-4 sm:left-6 md:left-8 overflow-hidden rounded-lg transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
               {/* Previous page (visible during backward flip) */}
-              {prevMonth && isFlipping && flipDirection === 'prev' && (
+              {isFlipping && flipDirection === 'prev' && currentPage === 1 && (
+                <div className="absolute inset-0 z-10">
+                  <DiaryOverviewPage isActive={false} />
+                </div>
+              )}
+              {prevMonth && isFlipping && flipDirection === 'prev' && currentPage > 1 && (
                 <div className="absolute inset-0 z-10">
                   <DiaryPage data={prevMonth} isActive={false} />
                 </div>
               )}
               
-              {/* Next page (visible under current during forward flip) - could be New Year page */}
-              {isFlipping && flipDirection === 'next' && currentPage === diaryContent.length - 1 && (
+              {/* Next page (visible under current during forward flip) */}
+              {isFlipping && flipDirection === 'next' && currentPage === 0 && (
+                <div className="absolute inset-0 z-10">
+                  <DiaryPage data={diaryContent[0]} isActive={false} />
+                </div>
+              )}
+              {isFlipping && flipDirection === 'next' && currentPage === diaryContent.length && (
                 <div className="absolute inset-0 z-10">
                   <NewYearWishPage isActive={false} />
                 </div>
               )}
-              {nextMonth && isFlipping && flipDirection === 'next' && currentPage < diaryContent.length - 1 && (
+              {nextMonth && isFlipping && flipDirection === 'next' && currentPage > 0 && currentPage < diaryContent.length && (
                 <div className="absolute inset-0 z-10">
                   <DiaryPage data={nextMonth} isActive={false} />
                 </div>
@@ -207,7 +220,9 @@ export const Diary = () => {
                   className="absolute inset-0 backface-hidden"
                   style={{ backfaceVisibility: 'hidden' }}
                 >
-                  {isNewYearPage ? (
+                  {isOverviewPage ? (
+                    <DiaryOverviewPage isActive={!isFlipping} />
+                  ) : isNewYearPage ? (
                     <NewYearWishPage isActive={!isFlipping} />
                   ) : (
                     <DiaryPage data={currentMonth!} isActive={!isFlipping} />
@@ -279,18 +294,25 @@ export const Diary = () => {
         {/* Navigation Dots - only show when open and not on back cover */}
         {isOpen && !showBackCover && (
           <div className="flex items-center gap-1.5 sm:gap-2 mt-3 sm:mt-6 md:mt-8 animate-fade-in">
+            {/* Overview page dot */}
+            <button
+              onClick={() => goToPage(0)}
+              className={`nav-dot ${isOverviewPage ? 'active' : ''}`}
+              aria-label="Overview"
+              title="Overview"
+            />
             {diaryContent.map((month, index) => (
               <button
                 key={month.month}
-                onClick={() => goToPage(index)}
-                className={`nav-dot ${index === currentPage ? 'active' : ''}`}
+                onClick={() => goToPage(index + 1)}
+                className={`nav-dot ${monthIndex === index ? 'active' : ''}`}
                 aria-label={`Go to ${month.month}`}
                 title={month.month}
               />
             ))}
             {/* New Year wish page dot */}
             <button
-              onClick={() => goToPage(diaryContent.length)}
+              onClick={() => goToPage(diaryContent.length + 1)}
               className={`nav-dot ${isNewYearPage ? 'active' : ''}`}
               aria-label="New Year Wishes"
               title="New Year Wishes"
@@ -301,7 +323,7 @@ export const Diary = () => {
         {/* Current Month Label - only show when open and not on back cover */}
         {isOpen && !showBackCover && (
           <p className="font-script text-lg sm:text-xl md:text-2xl gold-text mt-2 sm:mt-4 animate-fade-in">
-            {isNewYearPage ? "New Year Wishes" : currentMonth?.month}
+            {isOverviewPage ? "Our Year Together" : isNewYearPage ? "New Year Wishes" : currentMonth?.month}
           </p>
         )}
       </div>
