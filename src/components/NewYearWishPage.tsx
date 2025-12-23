@@ -24,7 +24,7 @@ export const NewYearWishPage = ({ isActive }: NewYearWishPageProps) => {
             Happy New Year
           </h2>
           <p className="font-script text-lg sm:text-xl md:text-2xl text-diary-ink/80">
-            2025
+            2026
           </p>
           <div className="mt-4 sm:mt-6 flex justify-center gap-2">
             <Star className="w-4 h-4 sm:w-5 sm:h-5 text-diary-gold/70 fill-diary-gold/30" />

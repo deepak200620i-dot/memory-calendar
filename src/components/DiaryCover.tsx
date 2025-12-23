@@ -42,7 +42,9 @@ export const DiaryCover = ({ isOpen, onOpen }: DiaryCoverProps) => {
             Our Year Together
           </h1>
           <p className="font-serif text-diary-gold/70 text-sm sm:text-base mb-2">
-            2024
+            2025
+            <br /> A Diary of Memories
+            <br />SHKACHU
           </p>
           <div className="w-24 h-0.5 bg-diary-gold/60 mt-6"></div>
           
