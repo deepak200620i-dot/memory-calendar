@@ -26,7 +26,7 @@ export const diaryContent: MonthData[] = [
       "Heart-shaped pancakes",
       "Love letters exchanged"
     ],
-    story: "February logo ke according toh the month of love...hota b hoga shayad...may be logo ko kisi specific month mai pyaar hota hoga...Pr mujhe kya mujhe konsa kisi se payaar hona lga mera liya toh Februray is the month of cochlates aur koi ek adha rose mil jai toh month of roses bhi ho jata hai...pura February toh mai bs isliya school jata rha kyuki subha-subha ap miljata tha ...subha subha thnd aur us thand mai school uniform mai apko dekhna...Kher ab vo Februray dobara ni aata...ab vo kismat rhi niii...",
+    story: "February logo ke according toh the month of love...hota b hoga shayad...may be logo ko kisi specific month mai pyaar hota hoga...Pr mujhe kya mujhe konsa kisi se payaar hona lga mera liya toh Februray is the month of cochlates aur koi ek adha rose mil jai toh month of roses bhi ho jata hai...pura February toh mai bs isliya school jata rha kyuki subha-subha ap miljata tha ...subha subha thnd aur us thand mai school uniform mai apko dekhna...Kher ab vo Februray dobara ni aatii...ab vo kismat rhi niii...",
     photoPlaceholders: 2
   },
   {
