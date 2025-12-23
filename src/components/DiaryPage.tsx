@@ -64,11 +64,12 @@ export const DiaryPage = ({ data, isActive }: DiaryPageProps) => {
         
         {/* Photo Grid */}
         <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 items-center justify-center relative z-20 mt-1 sm:mt-2 pb-4 sm:pb-2">
-          {Array.from({ length: data.photoPlaceholders }).map((_, i) => (
+          {data.photos.map((photoUrl, i) => (
             <PhotoMemory 
               key={i} 
               index={i} 
               season={data.season}
+              photoUrl={photoUrl}
               rotation={Math.random() * 6 - 3}
             />
           ))}
