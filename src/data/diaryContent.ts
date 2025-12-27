@@ -10,11 +10,6 @@ export const diaryContent: MonthData[] = [
   {
     month: "January",
     season: "winter",
-    memories: [
-      "Our first snow together",
-      "Cozy nights with hot cocoa",
-      "New Year's kiss at midnight"
-    ],
     story: "January a month where everything begins a new. Shayad hamra liya ek new journey ka start tha, may be a chance to forget the past leave the future and create beautiful memories together. Doesn't matter how much success we achieved in that but acha toh bhaut rha aur hona b chaiye.Ab jis cheez ki shuraat apka sath hui ho wo toh hamesha hi special rhi hai.Aur vasa b saal ke starting mai apse milna usse acha toh aur kya hi ho sakta tha. Achi cheezo ki Kharab baate bhi hoti hi hai...aur vo ya ki sbse jada yaad bhi vo hi aati hai.Ab jb saal ke end mai hai toh saal ka pehla din yaad aata hai...Bhaut jaldi nikl gya sb kuch asa lagta abhi toh January thi, Thoda din phele hi toh apse mila tha...pr nii...vo 365 din purani baat ho gyi...aur ab naya saal shayad nayi umeedein nayi khawaishein bhi....I hope January phir se ek chance de phir ek nayi shurat ek nayi journey. I hope January wha se shuru na kre jaha December ne shoda tha...And I pray January tumhme phir se Khush kra,tumhe phir se khush rehna ki ek new reason de aur bhaut bhaut sari khushiyan le kr aaye apka liya...",
     photos: [
       "/Photos/pic1.jpg",
@@ -25,11 +20,7 @@ export const diaryContent: MonthData[] = [
   {
     month: "February",
     season: "winter",
-    memories: [
-      "Valentine's candlelit dinner",
-      "Heart-shaped pancakes",
-      "Love letters exchanged"
-    ],
+
     story: "February logo ke according toh the month of love...hota b hoga shayad...may be logo ko kisi specific month mai pyaar hota hoga...Pr mujhe kya mujhe konsa kisi se payaar hona lga mera liya toh Februray is the month of cochlates aur koi ek adha rose mil jai toh month of roses bhi ho jata hai...Vasa toh jada kuch hai ni February mai likhna jaisa bs kuch memories..Like rose day wala din rose dena ka liya udhr road pr intzaar krna phir rose dena ke baad b gaali khana🙂....ya phir ya ki pura February mai bs isliya school jata rha kyuki subha-subha ap miljata the😁 ...subha subha thnd aur us thand mai school uniform mai apko dekhna😋...Kher ab vo Februray dobara ni aatii...ab vo kismat rhi niii🤧...Jb se Mysore mai shift hua hu tb se toh🙂 ....Pr koi baat ni ab toh kya January kya February jb rehna hi idhr hai toh kya farak pdta hai🙃... na toh idhr school hai na thand aur na hi Tum🫠...2026 mai bahut kuch change ho jaiga..almost sb kuch hi change ho jaiga.... phir bhi umeed rhegi kbhi February change na ho..... apke liya Feb hamesha hi The Month of Love bna rhe😊...           ",
         photos: [
       "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=200&h=200&fit=crop",
@@ -40,12 +31,8 @@ export const diaryContent: MonthData[] = [
   {
     month: "March",
     season: "spring",
-    memories: [
-      "First flowers blooming",
-      "Rainy day movie marathons",
-      "Planning spring adventures"
-    ],
-    story: "March asa toh favorite month hota tha mera,Apka birth month hai isliye pr is saal ke baad toh pta ni kya....pr mera pass kuch hai ni likhna ko iske bara mai....kuch yaad ni hai....na mai karna chata hu....   ",
+    
+    story: "March asa toh favorite month hota tha mera,Apka birth month hai isliye pr is saal ke baad toh pta ni kya....pr mera pass kuch hai ni likhna ko iske bara mai....kuch yaad ni hai....na mai karna chata hu....Starting ka 10-12 din toh thik the pr...sirf 10-12 din hi thik the...March ke baad toh jaisa sb kuch hi badal gya...Worst month tha shayad rhega bhi...uske baad toh khone layak kuch khaas rha nhi... 2 diary thi vo bhi nhi rhi...Sb kuch hi khatam ho gya tha almost toh...Ab toh asa lagta hai mr toh march mai hi gya tha ab toh bs rebirth hua hai, aur vo hi rebirth wali jindagi jee rha hu...Aur koi ummeed b nhi ab..na kudh se na kisi bhagwan se..na kisi aur se...   ",
     photos: [
       "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=200&h=200&fit=crop",
       "https://images.unsplash.com/photo-1462275646964-a0e3571f4f9f?w=200&h=200&fit=crop",
@@ -55,12 +42,8 @@ export const diaryContent: MonthData[] = [
   {
     month: "April",
     season: "spring",
-    memories: [
-      "Cherry blossoms picnic",
-      "Surprise birthday celebration",
-      "Dancing in the spring rain"
-    ],
-    story: "April showered us with cherry blossoms and spontaneous adventures. We had picnics under blooming trees, petals falling around us like confetti. One afternoon, we got caught in a sudden downpour and instead of running for cover, we danced. You twirled me around, both of us laughing, completely soaked and completely happy.",
+   
+    story: "April Koi khass frk ni hai is saal April aur March mai dono ne mil kr pura saal barbad kiya hai...March ke baad toh adha April mai hua kya hai kuch smjh nhi aaya...1 din b nhi yaad starting ke 10-20 dino mai se...Phir 21 April ko apse baat hui...Dadu bimar hai doctor chandigarh reffer kr rhe hai...Uske baad toh life ne asa turn liya ki vapis se sahi rasta mila hi nhi.....Ajj tk smjh nhi aaya asa kya ho gya...ek ke baad ek sb kuch kharab kharab kharab hi kyu hota rha kbhi vapis se kuch sahi kyu nhi hau...Bhaut hi ajeeb sa lagta hai jb bhi mind mai aata hai ya 2 months bs 2 months kasa ....matlab kasa sb kuch hi change kr sakta hai....Apni puri life mai bhaut dekha bhaut se changes experience kiya pr phir b lagta hai ya 2 months jasa ghatiya mahina life mai kbhi na aaya vapis...March ke baad jaise conditions thi agr April mai vo asif ni jaise koi baat hui hi na hoti toh shayad bhaut mai bhaut pehle chl gya apki life se.....pr shayad kismat kuch aur chati thi...Khar in sabhi baato ke bara mai sochna nhi chata...Ab toh bs ya hi umeed hai dobara kbhi asa koi month dekhna ko na mile life mai....",
     photos: [
       "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=200&h=200&fit=crop",
       "https://images.unsplash.com/photo-1462275646964-a0e3571f4f9f?w=200&h=200&fit=crop",
@@ -70,12 +53,8 @@ export const diaryContent: MonthData[] = [
   {
     month: "May",
     season: "spring",
-    memories: [
-      "Garden planting together",
-      "Sunrise hiking adventures",
-      "Mother's Day family gathering"
-    ],
-    story: "May arrived with longer days and adventures calling our names. We started a little garden together — you chose the sunflowers, I picked the herbs. Early morning hikes became our ritual, chasing sunrises and collecting wildflowers. Watching things grow reminded me of us — how we nurture each other, how we bloom together.",
+   
+    story: "May ",
     photos: [
       "https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?w=200&h=200&fit=crop",
       "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200&h=200&fit=crop",
@@ -90,7 +69,7 @@ export const diaryContent: MonthData[] = [
       "Stargazing until dawn",
       "Summer solstice bonfire"
     ],
-    story: "Summer burst through June with golden warmth and endless possibilities. We took our first road trip to the coast, windows down, our favorite songs playing loud. Nights were spent stargazing, you naming constellations while I just watched you. The summer solstice bonfire marked the beginning of our warmest memories yet.",
+    story: "June",
     photos: [
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200&h=200&fit=crop",
       "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=200&h=200&fit=crop",
