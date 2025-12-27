@@ -24,7 +24,7 @@ export const PhotoMemory = ({ index, season, photoUrl, rotation = 0 }: PhotoMemo
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="aspect-square w-16 sm:w-16 md:w-20 lg:w-24 rounded-sm overflow-hidden bg-gray-100">
+      <div className="aspect-square w-24 sm:w-28 md:w-32 lg:w-36 rounded-sm overflow-hidden bg-gray-100">
         {!imageError ? (
           <img 
             src={photoUrl} 

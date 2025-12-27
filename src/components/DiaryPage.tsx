@@ -39,27 +39,11 @@ export const DiaryPage = ({ data, isActive }: DiaryPageProps) => {
       <div className="w-1/2 paper-left relative p-2 sm:p-4 md:p-6 lg:p-8 flex flex-col border-r border-diary-ink/10 overflow-y-auto overflow-x-hidden">
         <SeasonalDecorations season={data.season} />
         
-        <div className="relative z-20 flex-shrink-0">
+        <div className="relative z-20 flex-shrink-0 mb-4 sm:mb-6">
           <h2 className={`font-script text-xl sm:text-2xl md:text-3xl lg:text-4xl ${colors.title} mb-1 sm:mb-2`}>
             {data.month}
           </h2>
-          <div className={`h-0.5 w-12 sm:w-16 ${colors.bg} mb-2 sm:mb-4 md:mb-6`}></div>
-          
-          <h3 className="font-serif text-diary-ink/80 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest mb-2 sm:mb-3 md:mb-4">
-            Memories
-          </h3>
-          
-          <ul className="space-y-1 sm:space-y-2 mb-2 sm:mb-4 md:mb-6">
-            {data.memories.map((memory, i) => (
-              <li 
-                key={i}
-                className="flex items-start gap-1.5 sm:gap-2 text-diary-ink/70 text-[10px] sm:text-xs md:text-sm font-serif leading-tight"
-              >
-                <span className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full ${colors.bg} flex-shrink-0 mt-1`}></span>
-                <span className="line-clamp-2">{memory}</span>
-              </li>
-            ))}
-          </ul>
+          <div className={`h-0.5 w-12 sm:w-16 ${colors.bg}`}></div>
         </div>
         
         {/* Photo Grid */}
